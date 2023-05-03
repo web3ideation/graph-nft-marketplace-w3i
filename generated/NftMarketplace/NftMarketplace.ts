@@ -71,7 +71,7 @@ export class ItemCanceled__Params {
     this._event = event;
   }
 
-  get buyer(): Address {
+  get seller(): Address {
     return this._event.parameters[0].value.toAddress();
   }
 
