@@ -47,7 +47,7 @@ export function handleItemCanceled(event: ItemCanceledEvent): void {
   itemCanceled.listingId = event.params.listingId
   // itemCanceled.price = event.params.price
 
-  activeItem!.buyer = Address.fromString("0x000000000000000000000000000000000000dEaD") // !!! check if active items have the 0x0000000000000000000000000000000000000000 as their buyer rather thand the dEaD address. Bc if not i could just use the 0x0000000000000000000000000000000000000000 here.
+  activeItem!.buyer = Address.fromString("0x000000000000000000000000000000000000dEaD")
 
   itemCanceled.save()
   activeItem!.save()
@@ -78,10 +78,11 @@ export function handleItemListed(event: ItemListedEvent): void {
   activeItem.tokenId = event.params.tokenId
   activeItem.price = event.params.price
   activeItem.listingId = event.params.listingId
+  activeItem.buyer = Address.fromString("0x0000000000000000000000000000000000000000")
 
 
   itemListed.save()
-  activeItem!.save()
+  activeItem.save()
 }
 
 export function handleItemUpdated(event: ItemUpdatedEvent): void { // !!! I added the updated event, since i nmy opinion this is important (patrick doesnt has this for some reason...)
@@ -112,9 +113,9 @@ export function handleItemUpdated(event: ItemUpdatedEvent): void { // !!! I adde
 
 
   itemUpdated.save()
-  activeItem!.save()
+  activeItem.save()
 }
 
 function getIdFromEventParams(tokenId: BigInt, nftAddress: Address): string {
-  return tokenId.toHexString() + nftAddress.toHexString() // !!! does this mathematically add the nftAddress to the tokenId or does it just write the two numbers together?
+  return tokenId.toHexString() + nftAddress.toHexString() // this will result in 0x00x2c9d7f070d03d83588e22c23fe858aa71274ad2a for the first nft !!! but kinda doesnt work bc the token Id doesnt get properly converted to a hex: it counts like 00, 10, 20
 }
