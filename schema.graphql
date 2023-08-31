@@ -6,6 +6,8 @@ type ActiveItem @entity {
   tokenId: BigInt! # uint256
   price: BigInt # uint256 # not required
   listingId: BigInt! # uint256
+  desiredNftAddress: Bytes! # address
+  desiredTokenId: BigInt! # uint256
 }
 
 type ItemListed @entity {
@@ -15,6 +17,8 @@ type ItemListed @entity {
   tokenId: BigInt! # uint256
   price: BigInt # uint256
   listingId: BigInt! # uint256
+  desiredNftAddress: Bytes! # address
+  desiredTokenId: BigInt! # uint256
 }
 
 type ItemCanceled @entity {
@@ -23,6 +27,8 @@ type ItemCanceled @entity {
   nftAddress: Bytes! # address
   tokenId: BigInt! # uint256
   listingId: BigInt! # uint256
+  desiredNftAddress: Bytes! # address
+  desiredTokenId: BigInt! # uint256
 }
 
 type ItemBought @entity {
@@ -32,6 +38,8 @@ type ItemBought @entity {
   tokenId: BigInt! # uint256
   price: BigInt # uint256
   listingId: BigInt! # uint256
+  desiredNftAddress: Bytes! # address
+  desiredTokenId: BigInt! # uint256
 }
 
 type ItemUpdated @entity {
@@ -41,4 +49,6 @@ type ItemUpdated @entity {
   tokenId: BigInt! # uint256
   price: BigInt # uint256
   listingId: BigInt! # uint256
+  desiredNftAddress: Bytes! # address
+  desiredTokenId: BigInt! # uint256
 }

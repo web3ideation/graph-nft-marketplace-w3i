@@ -29,7 +29,9 @@ export function handleItemBought(event: ItemBoughtEvent): void {
   itemBought.nftAddress = event.params.nftAddress;
   itemBought.tokenId = event.params.tokenId;
   itemBought.listingId = event.params.listingId;
-  // itemBought.price = event.params.price !!! shouldnt i also have the price in graph QL?
+  itemBought.price = event.params.price; // i uncommented this !!! shouldnt i also have the price in graph QL?
+  itemBought.desiredNftAddress = event.params.desiredNftAddress;
+  itemBought.desiredTokenId = event.params.desiredTokenId;
 
   activeItem!.buyer = event.params.buyer;
 
@@ -53,11 +55,14 @@ export function handleItemCanceled(event: ItemCanceledEvent): void {
   itemCanceled.nftAddress = event.params.nftAddress;
   itemCanceled.tokenId = event.params.tokenId;
   itemCanceled.listingId = event.params.listingId;
-  // itemCanceled.price = event.params.price
+  // itemCanceled.price = event.params.price; - doesnt exist on this event
+  itemCanceled.desiredNftAddress = event.params.desiredNftAddress;
+  itemCanceled.desiredTokenId = event.params.desiredTokenId;
 
   activeItem!.buyer = Address.fromString(
     "0x000000000000000000000000000000000000dEaD"
   );
+  // !!!W I would prefer to use another event parameter which just says active, sold, or canceled or sth like that. I think using the dead address as a symbol is not professional.
 
   itemCanceled.save();
   activeItem!.save();
@@ -86,6 +91,8 @@ export function handleItemListed(event: ItemListedEvent): void {
   itemListed.tokenId = event.params.tokenId;
   itemListed.price = event.params.price;
   itemListed.listingId = event.params.listingId;
+  itemListed.desiredNftAddress = event.params.desiredNftAddress;
+  itemListed.desiredTokenId = event.params.desiredTokenId;
 
   activeItem.seller = event.params.seller;
   activeItem.nftAddress = event.params.nftAddress;
@@ -94,7 +101,9 @@ export function handleItemListed(event: ItemListedEvent): void {
   activeItem.listingId = event.params.listingId;
   activeItem.buyer = Address.fromString(
     "0x0000000000000000000000000000000000000000"
-  );
+  ); // !!!W I would prefer to use another event parameter which just says active, sold, or canceled or sth like that. I think using the dead address as a symbol is not professional.
+  activeItem.desiredNftAddress = event.params.desiredNftAddress;
+  activeItem.desiredTokenId = event.params.desiredTokenId;
 
   itemListed.save();
   activeItem.save();
@@ -124,12 +133,16 @@ export function handleItemUpdated(event: ItemUpdatedEvent): void {
   itemUpdated.tokenId = event.params.tokenId;
   itemUpdated.price = event.params.price;
   itemUpdated.listingId = event.params.listingId;
+  itemUpdated.desiredNftAddress = event.params.desiredNftAddress;
+  itemUpdated.desiredTokenId = event.params.desiredTokenId;
 
   activeItem.seller = event.params.seller;
   activeItem.nftAddress = event.params.nftAddress;
   activeItem.tokenId = event.params.tokenId;
   activeItem.price = event.params.price;
   activeItem.listingId = event.params.listingId;
+  activeItem.desiredNftAddress = event.params.desiredNftAddress;
+  activeItem.desiredTokenId = event.params.desiredTokenId;
 
   itemUpdated.save();
   activeItem.save();

@@ -10,20 +10,6 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class EventEmitted extends ethereum.Event {
-  get params(): EventEmitted__Params {
-    return new EventEmitted__Params(this);
-  }
-}
-
-export class EventEmitted__Params {
-  _event: EventEmitted;
-
-  constructor(event: EventEmitted) {
-    this._event = event;
-  }
-}
-
 export class ItemBought extends ethereum.Event {
   get params(): ItemBought__Params {
     return new ItemBought__Params(this);
@@ -56,6 +42,14 @@ export class ItemBought__Params {
   get listingId(): BigInt {
     return this._event.parameters[4].value.toBigInt();
   }
+
+  get desiredNftAddress(): Address {
+    return this._event.parameters[5].value.toAddress();
+  }
+
+  get desiredTokenId(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
 }
 
 export class ItemCanceled extends ethereum.Event {
@@ -85,6 +79,14 @@ export class ItemCanceled__Params {
 
   get listingId(): BigInt {
     return this._event.parameters[3].value.toBigInt();
+  }
+
+  get desiredNftAddress(): Address {
+    return this._event.parameters[4].value.toAddress();
+  }
+
+  get desiredTokenId(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
   }
 }
 
@@ -120,6 +122,14 @@ export class ItemListed__Params {
   get listingId(): BigInt {
     return this._event.parameters[4].value.toBigInt();
   }
+
+  get desiredNftAddress(): Address {
+    return this._event.parameters[5].value.toAddress();
+  }
+
+  get desiredTokenId(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
 }
 
 export class ItemUpdated extends ethereum.Event {
@@ -154,6 +164,14 @@ export class ItemUpdated__Params {
   get listingId(): BigInt {
     return this._event.parameters[4].value.toBigInt();
   }
+
+  get desiredNftAddress(): Address {
+    return this._event.parameters[5].value.toAddress();
+  }
+
+  get desiredTokenId(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
 }
 
 export class NftMarketplace__getListingResultValue0Struct extends ethereum.Tuple {
@@ -167,6 +185,14 @@ export class NftMarketplace__getListingResultValue0Struct extends ethereum.Tuple
 
   get seller(): Address {
     return this[2].toAddress();
+  }
+
+  get desiredNftAddress(): Address {
+    return this[3].toAddress();
+  }
+
+  get desiredTokenId(): BigInt {
+    return this[4].toBigInt();
   }
 }
 
@@ -196,7 +222,7 @@ export class NftMarketplace extends ethereum.SmartContract {
   ): NftMarketplace__getListingResultValue0Struct {
     let result = super.call(
       "getListing",
-      "getListing(address,uint256):((uint256,uint256,address))",
+      "getListing(address,uint256):((uint256,uint256,address,address,uint256))",
       [
         ethereum.Value.fromAddress(nftAddress),
         ethereum.Value.fromUnsignedBigInt(tokenId)
@@ -214,7 +240,7 @@ export class NftMarketplace extends ethereum.SmartContract {
   ): ethereum.CallResult<NftMarketplace__getListingResultValue0Struct> {
     let result = super.tryCall(
       "getListing",
-      "getListing(address,uint256):((uint256,uint256,address))",
+      "getListing(address,uint256):((uint256,uint256,address,address,uint256))",
       [
         ethereum.Value.fromAddress(nftAddress),
         ethereum.Value.fromUnsignedBigInt(tokenId)
@@ -372,6 +398,14 @@ export class ListItemCall__Inputs {
   get price(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
+
+  get desiredNftAddress(): Address {
+    return this._call.inputValues[3].value.toAddress();
+  }
+
+  get desiredTokenId(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
+  }
 }
 
 export class ListItemCall__Outputs {
@@ -409,6 +443,14 @@ export class UpdateListingCall__Inputs {
 
   get newPrice(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get newDesiredNftAddress(): Address {
+    return this._call.inputValues[3].value.toAddress();
+  }
+
+  get newdesiredTokenId(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
   }
 }
 

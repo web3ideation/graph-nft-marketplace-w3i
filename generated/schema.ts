@@ -127,6 +127,32 @@ export class ActiveItem extends Entity {
   set listingId(value: BigInt) {
     this.set("listingId", Value.fromBigInt(value));
   }
+
+  get desiredNftAddress(): Bytes {
+    let value = this.get("desiredNftAddress");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set desiredNftAddress(value: Bytes) {
+    this.set("desiredNftAddress", Value.fromBytes(value));
+  }
+
+  get desiredTokenId(): BigInt {
+    let value = this.get("desiredTokenId");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set desiredTokenId(value: BigInt) {
+    this.set("desiredTokenId", Value.fromBigInt(value));
+  }
 }
 
 export class ItemListed extends Entity {
@@ -232,6 +258,32 @@ export class ItemListed extends Entity {
   set listingId(value: BigInt) {
     this.set("listingId", Value.fromBigInt(value));
   }
+
+  get desiredNftAddress(): Bytes {
+    let value = this.get("desiredNftAddress");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set desiredNftAddress(value: Bytes) {
+    this.set("desiredNftAddress", Value.fromBytes(value));
+  }
+
+  get desiredTokenId(): BigInt {
+    let value = this.get("desiredTokenId");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set desiredTokenId(value: BigInt) {
+    this.set("desiredTokenId", Value.fromBigInt(value));
+  }
 }
 
 export class ItemCanceled extends Entity {
@@ -319,6 +371,32 @@ export class ItemCanceled extends Entity {
 
   set listingId(value: BigInt) {
     this.set("listingId", Value.fromBigInt(value));
+  }
+
+  get desiredNftAddress(): Bytes {
+    let value = this.get("desiredNftAddress");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set desiredNftAddress(value: Bytes) {
+    this.set("desiredNftAddress", Value.fromBytes(value));
+  }
+
+  get desiredTokenId(): BigInt {
+    let value = this.get("desiredTokenId");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set desiredTokenId(value: BigInt) {
+    this.set("desiredTokenId", Value.fromBigInt(value));
   }
 }
 
@@ -425,6 +503,32 @@ export class ItemBought extends Entity {
   set listingId(value: BigInt) {
     this.set("listingId", Value.fromBigInt(value));
   }
+
+  get desiredNftAddress(): Bytes {
+    let value = this.get("desiredNftAddress");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set desiredNftAddress(value: Bytes) {
+    this.set("desiredNftAddress", Value.fromBytes(value));
+  }
+
+  get desiredTokenId(): BigInt {
+    let value = this.get("desiredTokenId");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set desiredTokenId(value: BigInt) {
+    this.set("desiredTokenId", Value.fromBigInt(value));
+  }
 }
 
 export class ItemUpdated extends Entity {
@@ -529,5 +633,31 @@ export class ItemUpdated extends Entity {
 
   set listingId(value: BigInt) {
     this.set("listingId", Value.fromBigInt(value));
+  }
+
+  get desiredNftAddress(): Bytes {
+    let value = this.get("desiredNftAddress");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set desiredNftAddress(value: Bytes) {
+    this.set("desiredNftAddress", Value.fromBytes(value));
+  }
+
+  get desiredTokenId(): BigInt {
+    let value = this.get("desiredTokenId");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set desiredTokenId(value: BigInt) {
+    this.set("desiredTokenId", Value.fromBigInt(value));
   }
 }
