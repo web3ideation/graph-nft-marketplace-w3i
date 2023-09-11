@@ -23,8 +23,8 @@ export class ItemBought__Params {
     this._event = event;
   }
 
-  get buyer(): Address {
-    return this._event.parameters[0].value.toAddress();
+  get listingId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
   }
 
   get nftAddress(): Address {
@@ -35,20 +35,28 @@ export class ItemBought__Params {
     return this._event.parameters[2].value.toBigInt();
   }
 
-  get price(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
+  get isListed(): boolean {
+    return this._event.parameters[3].value.toBoolean();
   }
 
-  get listingId(): BigInt {
+  get price(): BigInt {
     return this._event.parameters[4].value.toBigInt();
   }
 
-  get desiredNftAddress(): Address {
+  get seller(): Address {
     return this._event.parameters[5].value.toAddress();
   }
 
+  get buyer(): Address {
+    return this._event.parameters[6].value.toAddress();
+  }
+
+  get desiredNftAddress(): Address {
+    return this._event.parameters[7].value.toAddress();
+  }
+
   get desiredTokenId(): BigInt {
-    return this._event.parameters[6].value.toBigInt();
+    return this._event.parameters[8].value.toBigInt();
   }
 }
 
@@ -65,8 +73,8 @@ export class ItemCanceled__Params {
     this._event = event;
   }
 
-  get seller(): Address {
-    return this._event.parameters[0].value.toAddress();
+  get listingId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
   }
 
   get nftAddress(): Address {
@@ -77,16 +85,24 @@ export class ItemCanceled__Params {
     return this._event.parameters[2].value.toBigInt();
   }
 
-  get listingId(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
+  get isListed(): boolean {
+    return this._event.parameters[3].value.toBoolean();
+  }
+
+  get price(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get seller(): Address {
+    return this._event.parameters[5].value.toAddress();
   }
 
   get desiredNftAddress(): Address {
-    return this._event.parameters[4].value.toAddress();
+    return this._event.parameters[6].value.toAddress();
   }
 
   get desiredTokenId(): BigInt {
-    return this._event.parameters[5].value.toBigInt();
+    return this._event.parameters[7].value.toBigInt();
   }
 }
 
@@ -103,8 +119,8 @@ export class ItemListed__Params {
     this._event = event;
   }
 
-  get seller(): Address {
-    return this._event.parameters[0].value.toAddress();
+  get listingId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
   }
 
   get nftAddress(): Address {
@@ -115,20 +131,24 @@ export class ItemListed__Params {
     return this._event.parameters[2].value.toBigInt();
   }
 
-  get price(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
+  get isListed(): boolean {
+    return this._event.parameters[3].value.toBoolean();
   }
 
-  get listingId(): BigInt {
+  get price(): BigInt {
     return this._event.parameters[4].value.toBigInt();
   }
 
-  get desiredNftAddress(): Address {
+  get seller(): Address {
     return this._event.parameters[5].value.toAddress();
   }
 
+  get desiredNftAddress(): Address {
+    return this._event.parameters[6].value.toAddress();
+  }
+
   get desiredTokenId(): BigInt {
-    return this._event.parameters[6].value.toBigInt();
+    return this._event.parameters[7].value.toBigInt();
   }
 }
 
@@ -145,8 +165,8 @@ export class ItemUpdated__Params {
     this._event = event;
   }
 
-  get seller(): Address {
-    return this._event.parameters[0].value.toAddress();
+  get listingId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
   }
 
   get nftAddress(): Address {
@@ -157,20 +177,24 @@ export class ItemUpdated__Params {
     return this._event.parameters[2].value.toBigInt();
   }
 
-  get price(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
+  get isListed(): boolean {
+    return this._event.parameters[3].value.toBoolean();
   }
 
-  get listingId(): BigInt {
+  get price(): BigInt {
     return this._event.parameters[4].value.toBigInt();
   }
 
-  get desiredNftAddress(): Address {
+  get seller(): Address {
     return this._event.parameters[5].value.toAddress();
   }
 
+  get desiredNftAddress(): Address {
+    return this._event.parameters[6].value.toAddress();
+  }
+
   get desiredTokenId(): BigInt {
-    return this._event.parameters[6].value.toBigInt();
+    return this._event.parameters[7].value.toBigInt();
   }
 }
 

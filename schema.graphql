@@ -1,67 +1,61 @@
-type InactiveItem @entity {
+type Item @entity {
   id: ID!
-  buyer: Bytes # address
-  seller: Bytes! # address
-  nftAddress: Bytes! # address
-  tokenId: BigInt! # uint256
-  price: BigInt! # uint256
   listingId: BigInt! # uint256
-  desiredNftAddress: Bytes! # address
-  desiredTokenId: BigInt! # uint256
-}
-# take out that weird thing about 0x0000 is active and 0x00dead is inactive but just sort them based on the events in active item and inactive item.
-type ActiveItem @entity {
-  id: ID!
-  buyer: Bytes # address
-  seller: Bytes! # address
   nftAddress: Bytes! # address
   tokenId: BigInt! # uint256
+  isListed: Boolean! # bool
   price: BigInt! # uint256 # not required
-  listingId: BigInt! # uint256
+  seller: Bytes! # address
+  buyer: Bytes # address
   desiredNftAddress: Bytes! # address
   desiredTokenId: BigInt! # uint256
 }
 
 type ItemListed @entity {
   id: ID!
-  seller: Bytes! # address
+  listingId: BigInt! # uint256
   nftAddress: Bytes! # address
   tokenId: BigInt! # uint256
+  isListed: Boolean! # bool
   price: BigInt! # uint256
-  listingId: BigInt! # uint256
-  desiredNftAddress: Bytes! # address
-  desiredTokenId: BigInt! # uint256
-}
-
-type ItemCanceled @entity {
-  id: ID!
   seller: Bytes! # address
-  nftAddress: Bytes! # address
-  tokenId: BigInt! # uint256
-  price: BigInt # uint256 # update the tracking of the price for canceeld itemsin the nft-marketplace.ts !!!W
-  listingId: BigInt! # uint256
   desiredNftAddress: Bytes! # address
   desiredTokenId: BigInt! # uint256
 }
 
 type ItemBought @entity {
   id: ID!
-  buyer: Bytes! # address
+  listingId: BigInt! # uint256
   nftAddress: Bytes! # address
   tokenId: BigInt! # uint256
+  isListed: Boolean! # bool
   price: BigInt! # uint256
+  seller: Bytes! # address
+  buyer: Bytes! # address
+  desiredNftAddress: Bytes! # address
+  desiredTokenId: BigInt! # uint256
+}
+
+type ItemCanceled @entity {
+  id: ID!
   listingId: BigInt! # uint256
+  nftAddress: Bytes! # address
+  tokenId: BigInt! # uint256
+  isListed: Boolean! # bool
+  price: BigInt # uint256
+  seller: Bytes! # address
   desiredNftAddress: Bytes! # address
   desiredTokenId: BigInt! # uint256
 }
 
 type ItemUpdated @entity {
   id: ID!
-  seller: Bytes! # address
+  listingId: BigInt! # uint256
   nftAddress: Bytes! # address
   tokenId: BigInt! # uint256
+  isListed: Boolean! # bool
   price: BigInt! # uint256
-  listingId: BigInt! # uint256
+  seller: Bytes! # address
   desiredNftAddress: Bytes! # address
   desiredTokenId: BigInt! # uint256
 }

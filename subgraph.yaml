@@ -22,12 +22,12 @@ dataSources:
         - name: NftMarketplace
           file: ./abis/NftMarketplace.json
       eventHandlers:
-        - event: ItemBought(indexed address,indexed address,indexed uint256,uint256,uint256,address,uint256)
+        - event: ItemBought(indexed uint256,indexed address,indexed uint256,bool,uint256,address,address,address,uint256)
           handler: handleItemBought
-        - event: ItemCanceled(indexed address,indexed address,indexed uint256,uint256,address,uint256)
+        - event: ItemCanceled(indexed uint256,indexed address,indexed uint256,bool,uint256,address,address,uint256)
           handler: handleItemCanceled
-        - event: ItemListed(indexed address,indexed address,indexed uint256,uint256,uint256,address,uint256)
+        - event: ItemListed(indexed uint256,indexed address,indexed uint256,bool,uint256,address,address,uint256)
           handler: handleItemListed
-        - event: ItemUpdated(indexed address,indexed address,indexed uint256,uint256,uint256,address,uint256)
+        - event: ItemUpdated(indexed uint256,indexed address,indexed uint256,bool,uint256,address,address,uint256)
           handler: handleItemUpdated
       file: ./src/nft-marketplace.ts

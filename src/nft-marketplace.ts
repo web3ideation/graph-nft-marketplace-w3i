@@ -1,4 +1,4 @@
-import { BigInt, Address } from "@graphprotocol/graph-ts";
+// import { BigInt, Address } from "@graphprotocol/graph-ts"; // !!!W delete this if the listingId turns out to be fine as the ID
 import {
   ItemBought as ItemBoughtEvent,
   ItemCanceled as ItemCanceledEvent,
@@ -10,80 +10,19 @@ import {
   ItemCanceled,
   ItemListed,
   ItemUpdated,
-  ActiveItem,
+  Item,
 } from "../generated/schema";
-
-export function handleItemBought(event: ItemBoughtEvent): void {
-  let itemBought = ItemBought.load(
-    getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
-  );
-  let activeItem = ActiveItem.load(
-    getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
-  );
-  if (!itemBought) {
-    itemBought = new ItemBought(
-      getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
-    );
-  }
-  itemBought.buyer = event.params.buyer;
-  itemBought.nftAddress = event.params.nftAddress;
-  itemBought.tokenId = event.params.tokenId;
-  itemBought.listingId = event.params.listingId;
-  itemBought.price = event.params.price; // i uncommented this !!! shouldnt i also have the price in graph QL?
-  itemBought.desiredNftAddress = event.params.desiredNftAddress;
-  itemBought.desiredTokenId = event.params.desiredTokenId;
-
-  activeItem!.buyer = event.params.buyer;
-
-  itemBought.save();
-  activeItem!.save();
-}
-
-export function handleItemCanceled(event: ItemCanceledEvent): void {
-  let itemCanceled = ItemCanceled.load(
-    getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
-  );
-  let activeItem = ActiveItem.load(
-    getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
-  );
-  if (!itemCanceled) {
-    itemCanceled = new ItemCanceled(
-      getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
-    );
-  }
-  itemCanceled.seller = event.params.seller;
-  itemCanceled.nftAddress = event.params.nftAddress;
-  itemCanceled.tokenId = event.params.tokenId;
-  itemCanceled.listingId = event.params.listingId;
-  // itemCanceled.price = event.params.price; - doesnt exist on this event
-  itemCanceled.desiredNftAddress = event.params.desiredNftAddress;
-  itemCanceled.desiredTokenId = event.params.desiredTokenId;
-
-  activeItem!.buyer = Address.fromString(
-    "0x000000000000000000000000000000000000dEaD"
-  );
-  // !!!W I would prefer to use another event parameter which just says active, sold, or canceled or sth like that. I think using the dead address as a symbol is not professional.
-
-  itemCanceled.save();
-  activeItem!.save();
-}
 
 export function handleItemListed(event: ItemListedEvent): void {
   let itemListed = ItemListed.load(
-    getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
+    event.params.listingId.toString() // !!!W check if a string like this is ok, or if there are any limitations like if we are at one billion
   );
-  let activeItem = ActiveItem.load(
-    getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
-  );
+  let item = Item.load(event.params.listingId.toString());
   if (!itemListed) {
-    itemListed = new ItemListed(
-      getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
-    );
+    itemListed = new ItemListed(event.params.listingId.toString());
   }
-  if (!activeItem) {
-    activeItem = new ActiveItem(
-      getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
-    );
+  if (!item) {
+    item = new Item(event.params.listingId.toString());
   }
 
   itemListed.seller = event.params.seller;
@@ -93,39 +32,27 @@ export function handleItemListed(event: ItemListedEvent): void {
   itemListed.listingId = event.params.listingId;
   itemListed.desiredNftAddress = event.params.desiredNftAddress;
   itemListed.desiredTokenId = event.params.desiredTokenId;
+  itemListed.isListed = event.params.isListed;
 
-  activeItem.seller = event.params.seller;
-  activeItem.nftAddress = event.params.nftAddress;
-  activeItem.tokenId = event.params.tokenId;
-  activeItem.price = event.params.price;
-  activeItem.listingId = event.params.listingId;
-  activeItem.buyer = Address.fromString(
-    "0x0000000000000000000000000000000000000000"
-  ); // !!!W I would prefer to use another event parameter which just says active, sold, or canceled or sth like that. I think using the dead address as a symbol is not professional.
-  activeItem.desiredNftAddress = event.params.desiredNftAddress;
-  activeItem.desiredTokenId = event.params.desiredTokenId;
+  item.seller = event.params.seller;
+  item.nftAddress = event.params.nftAddress;
+  item.tokenId = event.params.tokenId;
+  item.price = event.params.price;
+  item.listingId = event.params.listingId;
+  item.desiredNftAddress = event.params.desiredNftAddress;
+  item.desiredTokenId = event.params.desiredTokenId;
+  item.isListed = event.params.isListed;
 
   itemListed.save();
-  activeItem.save();
+  item.save();
 }
 
 export function handleItemUpdated(event: ItemUpdatedEvent): void {
   // !!! I added the updated event, since i nmy opinion this is important (patrick doesnt has this for some reason...)
-  let itemUpdated = ItemUpdated.load(
-    getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
-  );
-  let activeItem = ActiveItem.load(
-    getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
-  );
+  let itemUpdated = ItemUpdated.load(event.params.listingId.toString());
+  let item = Item.load(event.params.listingId.toString());
   if (!itemUpdated) {
-    itemUpdated = new ItemUpdated(
-      getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
-    );
-  }
-  if (!activeItem) {
-    activeItem = new ActiveItem(
-      getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
-    );
+    itemUpdated = new ItemUpdated(event.params.listingId.toString());
   }
 
   itemUpdated.seller = event.params.seller;
@@ -135,19 +62,62 @@ export function handleItemUpdated(event: ItemUpdatedEvent): void {
   itemUpdated.listingId = event.params.listingId;
   itemUpdated.desiredNftAddress = event.params.desiredNftAddress;
   itemUpdated.desiredTokenId = event.params.desiredTokenId;
+  itemUpdated.isListed = event.params.isListed;
 
-  activeItem.seller = event.params.seller;
-  activeItem.nftAddress = event.params.nftAddress;
-  activeItem.tokenId = event.params.tokenId;
-  activeItem.price = event.params.price;
-  activeItem.listingId = event.params.listingId;
-  activeItem.desiredNftAddress = event.params.desiredNftAddress;
-  activeItem.desiredTokenId = event.params.desiredTokenId;
+  item!.price = event.params.price;
+  item!.desiredNftAddress = event.params.desiredNftAddress;
+  item!.desiredTokenId = event.params.desiredTokenId;
+  // !!!W I deleted the seller, nftaddress, tokenId, lisitingId, isListed change because only these 3 here can be updated, so to save processing capacity they dont need to be updadted. However this is just my therory, definetely verify this.
 
   itemUpdated.save();
-  activeItem.save();
+  item!.save();
 }
 
-function getIdFromEventParams(tokenId: BigInt, nftAddress: Address): string {
-  return tokenId.toHexString() + nftAddress.toHexString(); // this will result in 0x00x2c9d7f070d03d83588e22c23fe858aa71274ad2a for the first nft !!! but kinda doesnt work bc the token Id doesnt get properly converted to a hex: it counts like 00, 10, 20
+export function handleItemBought(event: ItemBoughtEvent): void {
+  let itemBought = ItemBought.load(event.params.listingId.toString());
+  let item = Item.load(event.params.listingId.toString());
+  if (!itemBought) {
+    itemBought = new ItemBought(event.params.listingId.toString());
+  }
+  itemBought.buyer = event.params.buyer;
+  itemBought.nftAddress = event.params.nftAddress;
+  itemBought.tokenId = event.params.tokenId;
+  itemBought.listingId = event.params.listingId;
+  itemBought.price = event.params.price; // !!!W i uncommented this !!! because shouldnt i also have the price in graph QL?
+  itemBought.desiredNftAddress = event.params.desiredNftAddress;
+  itemBought.desiredTokenId = event.params.desiredTokenId;
+  itemBought.isListed = event.params.isListed;
+
+  item!.buyer = event.params.buyer;
+  item!.isListed = event.params.isListed;
+
+  itemBought.save();
+  item!.save();
 }
+
+export function handleItemCanceled(event: ItemCanceledEvent): void {
+  let itemCanceled = ItemCanceled.load(event.params.listingId.toString());
+  let item = Item.load(event.params.listingId.toString());
+  if (!itemCanceled) {
+    itemCanceled = new ItemCanceled(event.params.listingId.toString());
+  }
+  itemCanceled.seller = event.params.seller;
+  itemCanceled.nftAddress = event.params.nftAddress;
+  itemCanceled.tokenId = event.params.tokenId;
+  itemCanceled.listingId = event.params.listingId;
+  itemCanceled.price = event.params.price;
+  itemCanceled.desiredNftAddress = event.params.desiredNftAddress;
+  itemCanceled.desiredTokenId = event.params.desiredTokenId;
+  itemCanceled.isListed = event.params.isListed;
+
+  item!.isListed = event.params.isListed;
+  // ***W done - I would prefer to use another event parameter which just says active, sold, or canceled or sth like that. I think using the dead address as a symbol is not professional.
+
+  itemCanceled.save();
+  item!.save();
+}
+
+// delete this if the listingId turns out to be fine as the entity ID, otherwise, this was the old way to generate a unique ID for each NFT
+// function getIdFromEventParams(tokenId: BigInt, nftAddress: Address): string {
+//   return tokenId.toHexString() + nftAddress.toHexString(); // this will result in 0x00x2c9d7f070d03d83588e22c23fe858aa71274ad2a for the first nft !!! but kinda doesnt work bc the token Id doesnt get properly converted to a hex: it counts like 00, 10, 20
+// }
