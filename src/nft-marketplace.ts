@@ -87,6 +87,7 @@ export function handleItemBought(event: ItemBoughtEvent): void {
   itemBought.desiredNftAddress = event.params.desiredNftAddress;
   itemBought.desiredTokenId = event.params.desiredTokenId;
   itemBought.isListed = event.params.isListed;
+  itemBought.seller = event.params.seller;
 
   item!.buyer = event.params.buyer;
   item!.isListed = event.params.isListed;
